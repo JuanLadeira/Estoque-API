@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=estoque_api
+POSTGRES_USER=iHjNoDWVjZZnYwOWdFaSRHYJxPyLoFjB
+POSTGRES_PASSWORD=b6WueWfJrzLqyPioTPi9KjnWUBCDPx9gmjf0DkumMDu6ULMPUqfd1VDHkLvnlYql
