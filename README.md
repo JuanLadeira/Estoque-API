@@ -1,16 +1,17 @@
 Estoque API
-# Projeto de estoque
+# Projeto Gestão de Estoque
 
 ## License: MIT
 
 ### Settings
-Moved to settings.
+https://cookiecutter-django.readthedocs.io/en/latest/settings.html
 
 ## Modelo / Model
+![models.png](img/models.png)
 
 ## Pré-requisitos / Prerequisites
 - Docker
-- bash
+- Taskipy
 
 ## Comandos Básicos / Basic Commands
 
@@ -165,7 +166,7 @@ task createsuperuser
 ```
 
 ## Deployment
-The following details how to deploy this application.
+https://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
 
 ### Docker
-See detailed cookiecutter-django Docker documentation.
+https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html
