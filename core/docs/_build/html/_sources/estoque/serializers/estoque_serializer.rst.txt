@@ -1,0 +1,9 @@
+Estoque Entrada Serializer
+======================================================================
+
+Estoque entrada serializer
+
+.. automodule:: estoque_api.estoque.serializers.estoque_entrada_serializer 
+   :members:
+   :noindex:
+

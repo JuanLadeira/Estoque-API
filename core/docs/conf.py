@@ -31,6 +31,7 @@ django.setup()
 project = "Estoque API"
 copyright = """2024, Juan Felipe + Regis Santos"""
 author = "Juan Felipe + Regis Santos"
+project_name = "Estoque API"
 
 
 # -- General configuration ---------------------------------------------------
@@ -41,6 +42,8 @@ author = "Juan Felipe + Regis Santos"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
+    'sphinxcontrib.mermaid',
+    "sphinx_wagtail_theme",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -56,9 +59,17 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+html_theme = "sphinx_wagtail_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ["_static"]
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    # 'private-members': True,
+    # 'special-members': True,
+    # 'inherited-members': True,
+    'show-inheritance': True,
+}
