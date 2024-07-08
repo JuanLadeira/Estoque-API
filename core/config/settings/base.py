@@ -351,7 +351,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Estoque API API",
     "DESCRIPTION": "Documentation of API endpoints of Estoque API",
     "VERSION": "1.0.0",
-    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
     "SCHEMA_PATH_PREFIX": "/api/",
 }
 # django-webpack-loader

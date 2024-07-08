@@ -180,3 +180,4 @@ test = "docker compose -f docker-compose.local.yml run --rm django pytest --verb
 makemigrations = "docker compose -f docker-compose.local.yml run --rm django python manage.py makemigrations"
 migrate = "docker compose -f docker-compose.local.yml run --rm django python manage.py migrate"
 createsuperuser = "docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser"
+criar_produto = "docker compose -f docker-compose.local.yml run --rm django python manage.py criar_produtos"
