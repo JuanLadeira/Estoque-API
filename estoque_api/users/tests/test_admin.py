@@ -10,7 +10,8 @@ from pytest_django.asserts import assertRedirects
 
 from estoque_api.users.models import User
 
-@pytest.mark.django_db
+
+@pytest.mark.django_db()
 class TestUserAdmin:
     def test_changelist(self, admin_client):
         url = reverse("admin:users_user_changelist")

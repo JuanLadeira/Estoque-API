@@ -1,6 +1,7 @@
+import pytest
 from django.urls import resolve
 from django.urls import reverse
-import pytest
+
 from estoque_api.users.models import User
 
 

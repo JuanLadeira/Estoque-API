@@ -1,18 +1,17 @@
-from django.db import models, transaction
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.db import models
+from django.db import transaction
 
-from estoque_api.users.models import User
 from estoque_api.core.models import TimeStampedModel
-
+from estoque_api.users.models import User
 
 MOVIMENTO = (
-    ('e', 'entrada'),
-    ('s', 'saída'),
+    ("e", "entrada"),
+    ("s", "saída"),
 )
 
-from logging import getLogger
 import logging
+from logging import getLogger
+
 logging.basicConfig(level=logging.DEBUG)
 
 log = getLogger(__name__)
@@ -20,18 +19,18 @@ log = getLogger(__name__)
 
 class Estoque(TimeStampedModel):
     funcionario = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
-    nf = models.PositiveIntegerField('nota fiscal', null=True, blank=True)
+    nf = models.PositiveIntegerField("nota fiscal", null=True, blank=True)
     movimento = models.CharField(max_length=1, choices=MOVIMENTO, blank=True)
     processado = models.BooleanField(default=False)
-    data = models.DateField('data', auto_now_add=True, help_text='Data do movimento')
+    data = models.DateField("data", auto_now_add=True, help_text="Data do movimento")
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def __str__(self):
         if self.nf:
-            return '{} - {} - {}'.format(self.pk, self.nf, self.created.strftime('%d-%m-%Y'))
-        return '{} --- {}'.format(self.pk, self.created.strftime('%d-%m-%Y'))
+            return "{} - {} - {}".format(self.pk, self.nf, self.created.strftime("%d-%m-%Y"))
+        return "{} --- {}".format(self.pk, self.created.strftime("%d-%m-%Y"))
 
 
     def get_movimento_display(self):
@@ -43,7 +42,7 @@ class Estoque(TimeStampedModel):
     def nf_formated(self):
         if self.nf:
             return str(self.nf).zfill(3)
-        return '---'
+        return "---"
 
     @transaction.atomic
     def processar(self):

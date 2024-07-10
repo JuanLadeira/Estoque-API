@@ -1,6 +1,11 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
-from estoque_api.produto.serializers.categoria_serializer import CategoriaGetSerializer, CategoriaPostSerializer
+from drf_spectacular.utils import OpenApiExample
+from drf_spectacular.utils import OpenApiParameter
+from drf_spectacular.utils import extend_schema
+
+from estoque_api.produto.serializers.categoria_serializer import CategoriaGetSerializer
+from estoque_api.produto.serializers.categoria_serializer import CategoriaPostSerializer
+
 
 def create_categoria_schema(view_func):
     decorator = extend_schema(

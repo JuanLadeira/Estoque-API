@@ -1,10 +1,11 @@
 """Module for all Form Tests."""
 
+import pytest
 from django.utils.translation import gettext_lazy as _
 
 from estoque_api.users.forms import UserAdminCreationForm
 from estoque_api.users.models import User
-import pytest
+
 
 @pytest.mark.django_db()
 class TestUserAdminCreationForm:

@@ -4,6 +4,7 @@ from rest_framework.test import APIRequestFactory
 from estoque_api.users.api.views import UserViewSet
 from estoque_api.users.models import User
 
+
 @pytest.mark.django_db()
 class TestUserViewSet:
     @pytest.fixture()

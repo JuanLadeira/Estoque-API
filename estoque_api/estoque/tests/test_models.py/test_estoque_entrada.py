@@ -1,5 +1,9 @@
 import pytest
-from estoque_api.estoque.serializers.estoque_entrada_serializer import EstoqueEntradaPostSerializer
+
+from estoque_api.estoque.serializers.estoque_entrada_serializer import (
+    EstoqueEntradaPostSerializer,
+)
+
 
 @pytest.mark.django_db(transaction=True)
 class TestEstoqueEntrada:
@@ -8,20 +12,20 @@ class TestEstoqueEntrada:
         produto_2 = produto_factory(estoque=0)
         funcionario = user_factory()
         dados_entrada = {
-                    'nf': 1,
-                    'movimento': 'e',
-                    'funcionario': funcionario.pk,
-                    'itens': [
+                    "nf": 1,
+                    "movimento": "e",
+                    "funcionario": funcionario.pk,
+                    "itens": [
                         {
-                            'produto': produto.pk,
-                            'quantidade': 1,
+                            "produto": produto.pk,
+                            "quantidade": 1,
                         },
                         {
-                            'produto': produto_2.pk,
-                            'quantidade': 2,
-                        }
-                    
-                    ]
+                            "produto": produto_2.pk,
+                            "quantidade": 2,
+                        },
+
+                    ],
 
                 }
 
@@ -40,8 +44,8 @@ class TestEstoqueEntrada:
         item_1 = estoque_entrada.estoque_itens.first()
         # Verificar os resultados
         assert estoque_entrada.pk is not None
-        assert estoque_entrada.nf == dados_entrada['nf']
-        assert estoque_entrada.movimento == dados_entrada['movimento']
+        assert estoque_entrada.nf == dados_entrada["nf"]
+        assert estoque_entrada.movimento == dados_entrada["movimento"]
         assert estoque_entrada.estoque_itens.count() == 2
         assert item_1.quantidade == 1
         assert produto_1.pk == produto.pk

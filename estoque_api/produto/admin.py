@@ -1,31 +1,31 @@
 import csv
 from datetime import datetime
+
 from django import forms
 from django.contrib import admin
-from django.http import HttpRequest, HttpResponse
-
-from estoque_api.produto.models.produto_model import Produto
-from estoque_api.produto.models.categoria_model import Categoria
+from django.http import HttpRequest
+from django.http import HttpResponse
 
 from estoque_api.estoque.models.estoque_itens_model import EstoqueItens
+from estoque_api.produto.models.categoria_model import Categoria
+from estoque_api.produto.models.produto_model import Produto
 
-
-MDATA = datetime.now().strftime('%Y-%m-%d')
+MDATA = datetime.now().strftime("%Y-%m-%d")
 
 class EstoqueItensInline(admin.TabularInline):
     verbose_name = "Movimentação"
     verbose_name_plural = "Ultimas movimentações"
     model = EstoqueItens
-    readonly_fields = ("estoque","movimento", "quantidade" , "produto", "data", "saldo", "nf", )
+    readonly_fields = ("estoque","movimento", "quantidade" , "produto", "data", "saldo", "nf" )
     can_delete = False
     extra = 0
 
     def has_add_permission(self, request:HttpRequest, obj=None) -> bool:
         return False
-    
+
     def has_change_permission(self, request, obj=None) -> bool:
         return False
-    
+
     def has_delete_permission(self, request: HttpRequest, obj) -> bool:
         return False
 
@@ -34,11 +34,11 @@ class EstoqueItensInline(admin.TabularInline):
             form = super(EstoqueItensInline, self).get_form(request, obj, **kwargs)
             # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
             # Para ocultar o campo 'movimento' do formulário
-            if 'estoque' in form.base_fields:
-                form.base_fields['estoque'].widget = forms.HiddenInput()
+            if "estoque" in form.base_fields:
+                form.base_fields["estoque"].widget = forms.HiddenInput()
             return form
 
- 
+
 
 class ProdudoInline(admin.TabularInline):
     model = Produto
@@ -47,39 +47,39 @@ class ProdudoInline(admin.TabularInline):
 
     def can_delete(self, request, obj=None):
         return False
-    
+
     def has_change_permission(self, request: HttpRequest, obj = None) -> bool:
         return False
-    
+
     def has_add_permission(self, request: HttpRequest, obj = None) -> bool:
         return False
 
-    
+
 
 
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = (
-        '__str__',
-        'importado',
-        'ncm',
-        'preco',
-        'estoque',
-        'estoque_minimo',
-        'categoria',
+        "__str__",
+        "importado",
+        "ncm",
+        "preco",
+        "estoque",
+        "estoque_minimo",
+        "categoria",
     )
-    search_fields = ('produto',)
-    list_filter = ('importado', 'categoria')
-    actions = ('export_as_csv', 'export_as_xlsx')
-    readonly_fields = ('estoque',)
+    search_fields = ("produto",)
+    list_filter = ("importado", "categoria")
+    actions = ("export_as_csv", "export_as_xlsx")
+    readonly_fields = ("estoque",)
 
-    inlines = [EstoqueItensInline,]
+    inlines = [EstoqueItensInline]
 
     class Media:
         js = (
-            'https://code.jquery.com/jquery-3.3.1.min.js',
-            '/static/js/estoque_admin.js'
+            "https://code.jquery.com/jquery-3.3.1.min.js",
+            "/static/js/estoque_admin.js",
         )
 
     def export_as_csv(self, request, queryset):
@@ -87,9 +87,9 @@ class ProdutoAdmin(admin.ModelAdmin):
         meta = self.model._meta
         field_names = [field.name for field in meta.fields]
 
-        response = HttpResponse(content_type='text/csv')
+        response = HttpResponse(content_type="text/csv")
         response[
-            'Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+            "Content-Disposition"] = f"attachment; filename={meta}.csv"
         writer = csv.writer(response)
 
         writer.writerow(field_names)
@@ -106,8 +106,8 @@ class ProdutoAdmin(admin.ModelAdmin):
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ('__str__', )
-    search_fields = ('categoria',)
-    readonly_fields = ('slug',)
+    list_display = ("__str__", )
+    search_fields = ("categoria",)
+    readonly_fields = ("slug",)
 
     inlines = [ProdudoInline]

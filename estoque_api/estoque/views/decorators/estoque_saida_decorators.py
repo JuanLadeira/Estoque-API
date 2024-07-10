@@ -1,6 +1,15 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
-from estoque_api.estoque.serializers.estoque_saida_serializer import EstoqueSaidaGetSerializer, EstoqueSaidaPostSerializer
+from drf_spectacular.utils import OpenApiExample
+from drf_spectacular.utils import OpenApiParameter
+from drf_spectacular.utils import extend_schema
+
+from estoque_api.estoque.serializers.estoque_saida_serializer import (
+    EstoqueSaidaGetSerializer,
+)
+from estoque_api.estoque.serializers.estoque_saida_serializer import (
+    EstoqueSaidaPostSerializer,
+)
+
 
 def create_estoque_saida_schema(view_func):
     decorator = extend_schema(
@@ -68,7 +77,7 @@ def list_estoque_saida_schema(view_func):
                 True: Processado
                 False: Não processado     
                 """,
-            )
+            ),
         ],
     )
     return decorator(view_func)

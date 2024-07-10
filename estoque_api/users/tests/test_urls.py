@@ -1,7 +1,9 @@
 import pytest
 from django.urls import resolve
 from django.urls import reverse
+
 from estoque_api.users.models import User
+
 
 @pytest.mark.django_db()
 def test_detail(user: User):

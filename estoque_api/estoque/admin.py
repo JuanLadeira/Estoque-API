@@ -1,42 +1,44 @@
 from typing import Any
+
 from django import forms
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 from unfold.admin import TabularInline
+
+from estoque_api.estoque.models.estoque_itens_model import EstoqueItens
+from estoque_api.estoque.models.protocolo_entrega_itens_model import (
+    ProtocoloEntregaItens,
+)
+from estoque_api.estoque.models.protocolo_entrega_model import ProtocoloEntrega
 from estoque_api.estoque.models.proxys.estoque_entrada import EstoqueEntrada
 from estoque_api.estoque.models.proxys.estoque_saida import EstoqueSaida
-from estoque_api.estoque.models.estoque_itens_model import EstoqueItens
-from estoque_api.estoque.models.protocolo_entrega_model import ProtocoloEntrega
-from estoque_api.estoque.models.protocolo_entrega_itens_model import ProtocoloEntregaItens
-
-
 
 
 class EstoqueItensInline(TabularInline):
     model = EstoqueItens
     extra = 0
-    readonly_fields = ('saldo',)
+    readonly_fields = ("saldo",)
 
 
 @admin.register(EstoqueEntrada)
 class EstoqueEntradaAdmin(ModelAdmin):
     inlines = (EstoqueItensInline,)
-    list_display = ('__str__', 'nf', 'funcionario',)
-    search_fields = ('nf',)
-    list_filter = ('funcionario',)
-    date_hierarchy = 'created'
-    verbose_name = 'Entrada de estoque'
-    verbose_name_plural = 'Entradas de estoque'
+    list_display = ("__str__", "nf", "funcionario")
+    search_fields = ("nf",)
+    list_filter = ("funcionario",)
+    date_hierarchy = "created"
+    verbose_name = "Entrada de estoque"
+    verbose_name_plural = "Entradas de estoque"
 
     def get_form(self, request, obj=None, **kwargs):
             form = super(EstoqueEntradaAdmin, self).get_form(request, obj, **kwargs)
             # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
-            form.base_fields['movimento'].initial = 'e'
+            form.base_fields["movimento"].initial = "e"
             # Para ocultar o campo 'movimento' do formulário
-            if 'movimento' in form.base_fields:
-                form.base_fields['movimento'].widget = forms.HiddenInput()
+            if "movimento" in form.base_fields:
+                form.base_fields["movimento"].widget = forms.HiddenInput()
             return form
-    
+
     def save_related(self, request: Any, form: Any, formsets: Any, change: Any) -> None:
         """
             ### Portuguese
@@ -60,19 +62,19 @@ class EstoqueEntradaAdmin(ModelAdmin):
 @admin.register(EstoqueSaida)
 class EstoqueSaidaAdmin(ModelAdmin):
     inlines = (EstoqueItensInline,)
-    list_display = ('__str__', 'nf', 'funcionario',)
-    search_fields = ('nf',)
-    list_filter = ('funcionario',)
-    date_hierarchy = 'created'
-    verbose_name = 'Saída de estoque'
+    list_display = ("__str__", "nf", "funcionario")
+    search_fields = ("nf",)
+    list_filter = ("funcionario",)
+    date_hierarchy = "created"
+    verbose_name = "Saída de estoque"
 
     def get_form(self, request, obj=None, **kwargs):
             form = super(EstoqueSaidaAdmin, self).get_form(request, obj, **kwargs)
             # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
-            form.base_fields['movimento'].initial = 's'
+            form.base_fields["movimento"].initial = "s"
             # Para ocultar o campo 'movimento' do formulário
-            if 'movimento' in form.base_fields:
-                form.base_fields['movimento'].widget = forms.HiddenInput()
+            if "movimento" in form.base_fields:
+                form.base_fields["movimento"].widget = forms.HiddenInput()
             return form
 
     def save_related(self, request: Any, form: Any, formsets: Any, change: Any) -> None:
@@ -89,9 +91,9 @@ class ProtocoloEntregaItensInline(TabularInline):
 @admin.register(ProtocoloEntrega)
 class ProtocoloEntregaAdmin(ModelAdmin):
     inlines = (ProtocoloEntregaItensInline,)
-    list_display = ('__str__', 'estoque_atualizado')
-    list_filter = ('usuario',)
-    date_hierarchy = 'created'
+    list_display = ("__str__", "estoque_atualizado")
+    list_filter = ("usuario",)
+    date_hierarchy = "created"
 
     def save_related(self, request: Any, form: Any, formsets: Any, change: Any) -> None:
         super().save_related(request, form, formsets, change)

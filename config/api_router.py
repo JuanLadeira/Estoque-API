@@ -2,9 +2,12 @@ from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework.routers import SimpleRouter
 
+from estoque_api.estoque.views import estoque_entrada_viewset
+from estoque_api.estoque.views import estoque_saida_viewset
+from estoque_api.estoque.views import protocolo_entrega_viewset
+from estoque_api.produto.views import categoria_viewset
+from estoque_api.produto.views import produto_viewset
 from estoque_api.users.api.views import UserViewSet
-from estoque_api.produto.views import produto_viewset, categoria_viewset
-from estoque_api.estoque.views import estoque_saida_viewset, estoque_entrada_viewset,  protocolo_entrega_viewset
 
 router = DefaultRouter() if settings.DEBUG else SimpleRouter()
 

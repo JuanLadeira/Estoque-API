@@ -1,8 +1,11 @@
-from django.core.management.base import BaseCommand, CommandError
-from estoque_api.produto.create_data import ProdutoClass, produtos
+from django.core.management.base import BaseCommand
+
+from estoque_api.produto.create_data import ProdutoClass
+from estoque_api.produto.create_data import produtos
+
 
 class Command(BaseCommand):
-    help = 'Cria produtos no banco de dados'
+    help = "Cria produtos no banco de dados"
 
     def add_arguments(self, parser):
         ...
@@ -13,4 +16,4 @@ class Command(BaseCommand):
         # Lógica do comando
         # sample_arg = options['sample_arg']
         ProdutoClass.criar_produtos(produtos=produtos)
-        self.stdout.write(self.style.SUCCESS(f'Produtos foram criados.'))
+        self.stdout.write(self.style.SUCCESS("Produtos foram criados."))

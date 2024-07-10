@@ -1,8 +1,12 @@
 # api_decorators.py
-from functools import wraps
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
-from estoque_api.produto.serializers.produto_serializer import ProdutoGetSerializer, ProdutoPostSerializer
+from drf_spectacular.utils import OpenApiExample
+from drf_spectacular.utils import OpenApiParameter
+from drf_spectacular.utils import extend_schema
+
+from estoque_api.produto.serializers.produto_serializer import ProdutoGetSerializer
+from estoque_api.produto.serializers.produto_serializer import ProdutoPostSerializer
+
 
 def create_product_schema(view_func):
     decorator = extend_schema(

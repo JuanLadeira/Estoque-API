@@ -1,7 +1,14 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
-from estoque_api.estoque.serializers.protoco_entrega_serializer import ProtocoloEntregaGetSerializer, ProtocoloEntregaPostSerializer
+from drf_spectacular.utils import OpenApiExample
+from drf_spectacular.utils import OpenApiParameter
+from drf_spectacular.utils import extend_schema
 
+from estoque_api.estoque.serializers.protoco_entrega_serializer import (
+    ProtocoloEntregaGetSerializer,
+)
+from estoque_api.estoque.serializers.protoco_entrega_serializer import (
+    ProtocoloEntregaPostSerializer,
+)
 
 
 def create_protocolo_entrega_schema(view_func):
@@ -81,7 +88,7 @@ def list_protocolo_entrega_schema(view_func):
                 False: Não processado
                 
                 """,
-            )
+            ),
         ],
     )
     return decorator(view_func)

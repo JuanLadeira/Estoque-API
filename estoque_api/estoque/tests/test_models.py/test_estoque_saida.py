@@ -1,6 +1,10 @@
 import pytest
-from estoque_api.estoque.serializers.estoque_saida_serializer import EstoqueSaidaPostSerializer
+
 from estoque_api.estoque.exceptions import ProdutoSaldoInsuficienteError
+from estoque_api.estoque.serializers.estoque_saida_serializer import (
+    EstoqueSaidaPostSerializer,
+)
+
 
 @pytest.mark.django_db(transaction=True)
 class TestEstoquesaida:
@@ -9,20 +13,20 @@ class TestEstoquesaida:
         produto_2 = produto_factory(estoque=2)
         funcionario = user_factory()
         dados_saida = {
-                    'nf': 1,
-                    'movimento': 's',
-                    'funcionario': funcionario.pk,
-                    'itens': [
+                    "nf": 1,
+                    "movimento": "s",
+                    "funcionario": funcionario.pk,
+                    "itens": [
                         {
-                            'produto': produto.pk,
-                            'quantidade': 1,
+                            "produto": produto.pk,
+                            "quantidade": 1,
                         },
                         {
-                            'produto': produto_2.pk,
-                            'quantidade': 2,
-                        }
-                    
-                    ]
+                            "produto": produto_2.pk,
+                            "quantidade": 2,
+                        },
+
+                    ],
 
                 }
         # Usar o serializer
@@ -42,8 +46,8 @@ class TestEstoquesaida:
         item_1 = estoque_saida.estoque_itens.first()
         # Verificar os resultados
         assert estoque_saida.pk is not None
-        assert estoque_saida.nf == dados_saida['nf']
-        assert estoque_saida.movimento == dados_saida['movimento']
+        assert estoque_saida.nf == dados_saida["nf"]
+        assert estoque_saida.movimento == dados_saida["movimento"]
         assert estoque_saida.estoque_itens.count() == 2
         assert item_1.quantidade == 1
         assert produto_1.pk == produto.pk
@@ -57,20 +61,20 @@ class TestEstoquesaida:
         produto_2 = produto_factory(estoque=0)
         funcionario = user_factory()
         dados_saida = {
-                    'nf': 1,
-                    'movimento': 's',
-                    'funcionario': funcionario.pk,
-                    'itens': [
+                    "nf": 1,
+                    "movimento": "s",
+                    "funcionario": funcionario.pk,
+                    "itens": [
                         {
-                            'produto': produto.pk,
-                            'quantidade': 1,
+                            "produto": produto.pk,
+                            "quantidade": 1,
                         },
                         {
-                            'produto': produto_2.pk,
-                            'quantidade': 2,
-                        }
-                    
-                    ]
+                            "produto": produto_2.pk,
+                            "quantidade": 2,
+                        },
+
+                    ],
 
                 }
         # Usar o serializer
@@ -80,5 +84,5 @@ class TestEstoquesaida:
         with pytest.raises(ProdutoSaldoInsuficienteError):
             if serializer.is_valid():
                 serializer.save()
-        
+
         assert produto.estoque == 0

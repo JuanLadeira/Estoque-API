@@ -5,8 +5,6 @@ from pathlib import Path
 
 import environ
 from django.templatetags.static import static
-from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # estoque_api/
@@ -434,7 +432,7 @@ def dashboard_callback(request, context):
     context.update(
         {
             "sample": "example",  # this will be injected into templates/admin/index.html
-        }
+        },
     )
     return context
 

@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from estoque_api.produto.models.produto_model import Produto
+
 
 class ProdutosInlineSerializer(serializers.ModelSerializer):
     class Meta:
