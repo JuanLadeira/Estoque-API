@@ -42,7 +42,8 @@ class ProdutoViewSet(viewsets.ModelViewSet):
         search = request.query_params.get("search", None)
         if search:
             queryset = Produto.objects.filter(
-                Q(produto__icontains=search) | Q(categoria__categoria__icontains=search),
+                Q(produto__icontains=search)
+                | Q(categoria__categoria__icontains=search),
             )
         else:
             queryset = Produto.objects.all()

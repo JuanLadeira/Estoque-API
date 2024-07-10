@@ -44,8 +44,12 @@ class ProtocoloEntregaViewSet(CreateListRetriveModelViewSet):
     @list_protocolo_entrega_schema
     def list(self, request, *args, **kwargs):
         """
-        List all deliveries protocols or search for a delivery by product name or user who was responsible for the delivery.
-        Lista todos os protocolos de entrega ou busca um protocolo de entrega pelo nome do produto ou usuário responsável pela entrega.
+        List all deliveries protocols or
+        search for a delivery by product name
+        or user who was responsible for the delivery.
+        Lista todos os protocolos de entrega ou
+        busca um protocolo de entrega pelo nome do produto
+        ou usuário responsável pela entrega.
         """
         search = request.query_params.get("search", None)
         created = request.query_params.get("data", None)
@@ -53,9 +57,14 @@ class ProtocoloEntregaViewSet(CreateListRetriveModelViewSet):
         if created:
             queryset = queryset.filter(created=created)
         if search:
-            queryset = queryset.annotate(full_name=Concat("usuario__first_name", Value(" "), "usuario__last_name"))
+            queryset = queryset.annotate(
+                full_name=Concat(
+                    "usuario__first_name", Value(" "), "usuario__last_name",
+                ),
+            )
             queryset = queryset.filter(
-            Q(estoque_itens__produto__produto=search) | Q(full_name__icontains=search),
+                Q(estoque_itens__produto__produto=search)
+                | Q(full_name__icontains=search),
             )
         serializer = ProtocoloEntregaGetSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -72,4 +81,3 @@ class ProtocoloEntregaViewSet(CreateListRetriveModelViewSet):
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except ProtocoloProcessadoError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-

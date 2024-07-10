@@ -16,4 +16,3 @@ class ProdutosInlineSerializer(serializers.ModelSerializer):
             "data",
         ]
         model = Produto
-

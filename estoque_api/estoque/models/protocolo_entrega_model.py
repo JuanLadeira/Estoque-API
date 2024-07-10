@@ -21,7 +21,7 @@ class ProtocoloEntrega(TimeStampedModel):
 
     def processar_protocolo(self, usuario: User):
         if self.estoque_atualizado:
-            raise ProtocoloProcessadoError()
+            raise ProtocoloProcessadoError
 
         with transaction.atomic():
             # Criar um EstoqueSaida
@@ -40,9 +40,8 @@ class ProtocoloEntrega(TimeStampedModel):
                 # Atualizar o estoque do produto
                 item.produto.estoque -= item.quantidade
                 item.produto.save()
-            #Processando a saida.
+            # Processando a saida.
             estoque_saida.processar()
 
             self.estoque_atualizado = True
             self.save()
-

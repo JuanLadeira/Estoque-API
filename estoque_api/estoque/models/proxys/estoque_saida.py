@@ -9,4 +9,3 @@ class EstoqueSaida(Estoque):
         proxy = True
         verbose_name = "registro de saída de estoque"
         verbose_name_plural = "registros de saída de estoque"
-

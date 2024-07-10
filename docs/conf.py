@@ -42,7 +42,7 @@ project_name = "Estoque API"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    'sphinxcontrib.mermaid',
+    "sphinxcontrib.mermaid",
     "sphinx_wagtail_theme",
 ]
 
@@ -66,10 +66,10 @@ html_theme = "sphinx_wagtail_theme"
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ["_static"]
 autodoc_default_options = {
-    'members': True,
-    'undoc-members': True,
+    "members": True,
+    "undoc-members": True,
     # 'private-members': True,
     # 'special-members': True,
     # 'inherited-members': True,
-    'show-inheritance': True,
+    "show-inheritance": True,
 }

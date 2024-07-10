@@ -108,7 +108,7 @@ select = [
   "T10",
   "DJ",
   "EM",
-  "EXE",
+  # "EXE",
   "FA",
   'ISC',
   "ICN",
@@ -121,7 +121,7 @@ select = [
   "Q",
   "RSE",
   "RET",
-  "SLF",
+  #"SLF",
   "SLOT",
   "SIM",
   "TID",
@@ -142,7 +142,10 @@ select = [
   # "LOG",
   "RUF"
 ]
+
 ignore = [
+  "S311",
+  "EXE002", # Use of `exec` detected https://docs.astral.sh/ruff/rules/exec/
   "S101", # Use of assert detected https://docs.astral.sh/ruff/rules/assert/
   "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
   "SIM102", # sometimes it's better to nest
@@ -181,4 +184,4 @@ makemigrations = "docker compose -f docker-compose.local.yml run --rm django pyt
 migrate = "docker compose -f docker-compose.local.yml run --rm django python manage.py migrate"
 createsuperuser = "docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser"
 criar_produto = "docker compose -f docker-compose.local.yml run --rm django python manage.py criar_produtos"
-ruff = "docker compose -f docker-compose.local.yml run --rm django ruff check --fix"
+ruff = "docker compose -f docker-compose.local.yml run --rm django ruff check --fix --unsafe-fixes"

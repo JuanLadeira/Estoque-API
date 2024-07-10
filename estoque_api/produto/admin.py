@@ -1,26 +1,35 @@
 import csv
-from datetime import datetime
 
 from django import forms
 from django.contrib import admin
 from django.http import HttpRequest
 from django.http import HttpResponse
+from django.utils import timezone
 
 from estoque_api.estoque.models.estoque_itens_model import EstoqueItens
 from estoque_api.produto.models.categoria_model import Categoria
 from estoque_api.produto.models.produto_model import Produto
 
-MDATA = datetime.now().strftime("%Y-%m-%d")
+MDATA = timezone.now().strftime("%Y-%m-%d")
+
 
 class EstoqueItensInline(admin.TabularInline):
     verbose_name = "Movimentação"
     verbose_name_plural = "Ultimas movimentações"
     model = EstoqueItens
-    readonly_fields = ("estoque","movimento", "quantidade" , "produto", "data", "saldo", "nf" )
+    readonly_fields = (
+        "estoque",
+        "movimento",
+        "quantidade",
+        "produto",
+        "data",
+        "saldo",
+        "nf",
+    )
     can_delete = False
     extra = 0
 
-    def has_add_permission(self, request:HttpRequest, obj=None) -> bool:
+    def has_add_permission(self, request: HttpRequest, obj=None) -> bool:
         return False
 
     def has_change_permission(self, request, obj=None) -> bool:
@@ -29,15 +38,13 @@ class EstoqueItensInline(admin.TabularInline):
     def has_delete_permission(self, request: HttpRequest, obj) -> bool:
         return False
 
-
     def get_form(self, request, obj=None, **kwargs):
-            form = super(EstoqueItensInline, self).get_form(request, obj, **kwargs)
-            # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
-            # Para ocultar o campo 'movimento' do formulário
-            if "estoque" in form.base_fields:
-                form.base_fields["estoque"].widget = forms.HiddenInput()
-            return form
-
+        form = super().get_form(request, obj, **kwargs)
+        # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
+        # Para ocultar o campo 'movimento' do formulário
+        if "estoque" in form.base_fields:
+            form.base_fields["estoque"].widget = forms.HiddenInput()
+        return form
 
 
 class ProdudoInline(admin.TabularInline):
@@ -48,14 +55,11 @@ class ProdudoInline(admin.TabularInline):
     def can_delete(self, request, obj=None):
         return False
 
-    def has_change_permission(self, request: HttpRequest, obj = None) -> bool:
+    def has_change_permission(self, request: HttpRequest, obj=None) -> bool:
         return False
 
-    def has_add_permission(self, request: HttpRequest, obj = None) -> bool:
+    def has_add_permission(self, request: HttpRequest, obj=None) -> bool:
         return False
-
-
-
 
 
 @admin.register(Produto)
@@ -83,30 +87,25 @@ class ProdutoAdmin(admin.ModelAdmin):
         )
 
     def export_as_csv(self, request, queryset):
-
         meta = self.model._meta
         field_names = [field.name for field in meta.fields]
 
         response = HttpResponse(content_type="text/csv")
-        response[
-            "Content-Disposition"] = f"attachment; filename={meta}.csv"
+        response["Content-Disposition"] = f"attachment; filename={meta}.csv"
         writer = csv.writer(response)
 
         writer.writerow(field_names)
         for obj in queryset:
-            row = writer.writerow([getattr(obj, field)
-                                   for field in field_names])
+            writer.writerow([getattr(obj, field) for field in field_names])
 
         return response
 
     export_as_csv.short_description = "Exportar CSV"
 
 
-
-
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ("__str__", )
+    list_display = ("__str__",)
     search_fields = ("categoria",)
     readonly_fields = ("slug",)
 

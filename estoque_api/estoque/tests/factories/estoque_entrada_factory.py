@@ -15,4 +15,9 @@ class EstoqueEntradaFactory(DjangoModelFactory):
     nf = Faker("random_int", min=1, max=999)
     movimento = "e"
     processado = False
-    data = Faker("date_time_this_month", before_now=True, after_now=False, tzinfo=timezone.get_current_timezone())
+    data = Faker(
+        "date_time_this_month",
+        before_now=True,
+        after_now=False,
+        tzinfo=timezone.get_current_timezone(),
+    )

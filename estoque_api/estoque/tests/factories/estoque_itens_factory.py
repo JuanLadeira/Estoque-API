@@ -1,4 +1,3 @@
-
 from factory import Faker
 from factory import SubFactory
 from factory.django import DjangoModelFactory

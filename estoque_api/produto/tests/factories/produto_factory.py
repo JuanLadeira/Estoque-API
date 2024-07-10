@@ -21,4 +21,3 @@ class ProdutoFactory(DjangoModelFactory):
     data = LazyFunction(timezone.now)
 
     categoria = SubFactory(CategoriaFactory)
-

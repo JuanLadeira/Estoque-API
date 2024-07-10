@@ -13,6 +13,7 @@ class CategoriaGetSerializer(serializers.ModelSerializer):
         fields = "__all__"
         model = Categoria
 
+
 class CategoriaPostSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"

@@ -13,9 +13,11 @@ from estoque_api.estoque.serializers.inlines.estoque_itens_inline_serializer imp
 
 class EstoqueSaidaGetSerializer(serializers.ModelSerializer):
     itens = EstoqueItensInlineGetSerializer(many=True, source="estoque_itens")
+
     class Meta:
         fields = "__all__"
         model = EstoqueSaida
+
 
 class EstoqueSaidaPostSerializer(serializers.ModelSerializer):
     itens = EstoqueItensInlineCreateSerializer(many=True, source="estoque_itens")
@@ -34,9 +36,12 @@ class EstoqueSaidaPostSerializer(serializers.ModelSerializer):
         validated_data["movimento"] = "s"  # Definindo o movimento
         estoque_saida = super().create(validated_data)
 
-        EstoqueItens.objects.bulk_create([
-            EstoqueItens(estoque=estoque_saida, **item_data) for item_data in itens_data
-        ])
+        EstoqueItens.objects.bulk_create(
+            [
+                EstoqueItens(estoque=estoque_saida, **item_data)
+                for item_data in itens_data
+            ],
+        )
         estoque_saida.processar()
 
         return estoque_saida

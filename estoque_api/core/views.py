@@ -14,4 +14,3 @@ class CreateListRetriveModelViewSet(
     - List
     - Retrieve
     """
-

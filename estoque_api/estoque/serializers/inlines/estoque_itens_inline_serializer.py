@@ -13,6 +13,7 @@ class EstoqueItensInlineCreateSerializer(serializers.ModelSerializer):
         data["saldo"] = instance.saldo
         return data
 
+
 class EstoqueItensInlineGetSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"

@@ -18,6 +18,7 @@ def create_product_schema(view_func):
     )
     return decorator(view_func)
 
+
 def update_product_schema(view_func):
     decorator = extend_schema(
         tags=["Produto"],
@@ -27,6 +28,7 @@ def update_product_schema(view_func):
         responses={200: ProdutoPostSerializer},
     )
     return decorator(view_func)
+
 
 def partial_update_product_schema(view_func):
     decorator = extend_schema(
@@ -38,6 +40,7 @@ def partial_update_product_schema(view_func):
     )
     return decorator(view_func)
 
+
 def retrieve_product_schema(view_func):
     decorator = extend_schema(
         tags=["Produto"],
@@ -47,17 +50,25 @@ def retrieve_product_schema(view_func):
     )
     return decorator(view_func)
 
+
 def list_product_schema(view_func):
-    decorator =  extend_schema(
+    decorator = extend_schema(
         tags=["Produto"],
         summary="List products or search for a product",
-        description="List all products or search for a product by name, description or category",
+        description="""
+        List all products or
+        search for a product by name,
+        description or category
+        """,
         parameters=[
             OpenApiParameter(
                 name="search",
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
-                description="List or Search for a product by name, description or category",
+                description="""
+                List or Search for a product by name,
+                description or category
+                """,
                 examples=[
                     OpenApiExample(
                         name="Search by name",
@@ -76,6 +87,7 @@ def list_product_schema(view_func):
         ],
     )
     return decorator(view_func)
+
 
 def destroy_product_schema(view_func):
     decorator = extend_schema(

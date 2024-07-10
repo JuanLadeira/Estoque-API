@@ -10,6 +10,7 @@ from estoque_api.produto.models.produto_model import Produto
 
 log = getLogger("django")
 
+
 class EstoqueItens(models.Model):
     estoque = models.ForeignKey(
         Estoque,
@@ -28,14 +29,13 @@ class EstoqueItens(models.Model):
     def __str__(self):
         return f"{self.pk} - {self.estoque.pk} - {self.produto}"
 
-
     def data(self) -> date:
         return self.estoque.data
 
     def movimento(self) -> str:
         return self.estoque.get_movimento_display()
 
-    def nf(self)-> int:
+    def nf(self) -> int:
         return self.estoque.nf
 
     @transaction.atomic
@@ -49,9 +49,10 @@ class EstoqueItens(models.Model):
             log.info("entrei na subtração do saldo")
             saldo = self.produto.estoque - self.quantidade
             if saldo < 0:
-                raise ProdutoSaldoInsuficienteError(self.produto.produto, self.quantidade)
+                raise ProdutoSaldoInsuficienteError(
+                    self.produto.produto, self.quantidade,
+                )
         self.saldo = saldo
         self.produto.estoque = saldo
         self.produto.save()
         self.save()
-

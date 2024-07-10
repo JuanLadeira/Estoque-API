@@ -1,52 +1,51 @@
+
 import os
-
-import django
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "estoque_api.settings")
-django.setup()
-
 import string
 import timeit
 from random import choice
 from random import randint
 from random import random
 
+import django
+
 from estoque_api.produto.models.produto_model import Produto
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "estoque_api.settings")
+django.setup()
 
 
 def cronometrize(func):
     def wrapper(*args, **kwargs):
-        tic = timeit.default_timer()
+        timeit.default_timer()
         results = func(*args, **kwargs)
-        toc = timeit.default_timer()
-        print(f"Function {func.__name__} took {toc - tic} seconds to execute.")
-        print(f"A função {func.__name__} levou {toc - tic } segundos ")
+        timeit.default_timer()
         return results
+
     return wrapper
 
 
 class Utils:
-    """ Métodos genéricos. """
+    """Métodos genéricos."""
+
     @staticmethod
     def gen_digits(max_length):
         return str("".join(choice(string.digits) for i in range(max_length)))
 
 
 class ProdutoClass:
-
     @cronometrize
     @staticmethod
     def criar_produtos(produtos):
         Produto.objects.all().delete()
         aux = []
         for produto in produtos:
-            data = dict(
-                produto=produto,
-                importado=choice((True, False)),
-                ncm=Utils.gen_digits(8),
-                preco=random() * randint(10, 50),
-                estoque=randint(10, 200),
-            )
+            data = {
+                "produto": produto,
+                "importado": choice((True, False)),
+                "ncm": Utils.gen_digits(8),
+                "preco": random() * randint(10, 50),
+                "estoque": randint(10, 200),
+            }
             obj = Produto(**data)
             aux.append(obj)
         Produto.objects.bulk_create(aux)
@@ -70,6 +69,3 @@ produtos = (
     "Pasta elástica",
     "Tesoura",
 )
-
-
-

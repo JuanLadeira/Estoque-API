@@ -7,4 +7,3 @@ class CategoriaInlineSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = Categoria
-

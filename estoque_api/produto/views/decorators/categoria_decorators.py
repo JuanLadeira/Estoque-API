@@ -17,6 +17,7 @@ def create_categoria_schema(view_func):
     )
     return decorator(view_func)
 
+
 def update_categoria_schema(view_func):
     decorator = extend_schema(
         tags=["Categoria"],
@@ -26,6 +27,7 @@ def update_categoria_schema(view_func):
         responses={200: CategoriaPostSerializer},
     )
     return decorator(view_func)
+
 
 def partial_update_categoria_schema(view_func):
     decorator = extend_schema(
@@ -37,6 +39,7 @@ def partial_update_categoria_schema(view_func):
     )
     return decorator(view_func)
 
+
 def retrieve_categoria_schema(view_func):
     decorator = extend_schema(
         tags=["Categoria"],
@@ -46,8 +49,9 @@ def retrieve_categoria_schema(view_func):
     )
     return decorator(view_func)
 
+
 def list_categoria_schema(view_func):
-    decorator =  extend_schema(
+    decorator = extend_schema(
         tags=["Categoria"],
         summary="List categorias or search for a categoria",
         description="List all categorias or search for a categoria by name",
@@ -67,6 +71,7 @@ def list_categoria_schema(view_func):
         ],
     )
     return decorator(view_func)
+
 
 def destroy_categoria_schema(view_func):
     decorator = extend_schema(

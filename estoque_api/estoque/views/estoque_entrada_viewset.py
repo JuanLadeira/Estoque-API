@@ -1,4 +1,3 @@
-
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
@@ -30,7 +29,6 @@ class EstoqueEntradaViewSet(CreateListRetriveModelViewSet):
             return EstoqueEntradaGetSerializer
         return EstoqueEntradaPostSerializer
 
-
     @retrieve_estoque_entrada_schema
     def retrieve(self, request, *args, **kwargs):
         """
@@ -42,8 +40,12 @@ class EstoqueEntradaViewSet(CreateListRetriveModelViewSet):
     @list_estoque_entrada_schema
     def list(self, request, *args, **kwargs):
         """
-        List all estoque entries or search for a estoque entry by product or 'nota fiscal' (nf)
-        Lista todas as entradas de estoque ou busca uma entrada de estoque por produto ou 'nota fiscal' (nf)
+        List all estoque entries or
+        search for a estoque entry by product or
+        'nota fiscal' (nf)
+        Lista todas as entradas de estoque ou
+        busca uma entrada de estoque por produto ou
+        'nota fiscal' (nf)
         """
         search = request.query_params.get("search", None)
         data_entrada = request.query_params.get("data_entrada", None)

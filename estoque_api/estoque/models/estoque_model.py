@@ -1,3 +1,7 @@
+from logging import DEBUG
+from logging import basicConfig
+from logging import getLogger
+
 from django.db import models
 from django.db import transaction
 
@@ -9,11 +13,8 @@ MOVIMENTO = (
     ("s", "saída"),
 )
 
-import logging
-from logging import getLogger
 
-logging.basicConfig(level=logging.DEBUG)
-
+basicConfig(level=DEBUG)
 log = getLogger(__name__)
 
 
@@ -29,9 +30,10 @@ class Estoque(TimeStampedModel):
 
     def __str__(self):
         if self.nf:
-            return "{} - {} - {}".format(self.pk, self.nf, self.created.strftime("%d-%m-%Y"))
+            return "{} - {} - {}".format(
+                self.pk, self.nf, self.created.strftime("%d-%m-%Y"),
+            )
         return "{} --- {}".format(self.pk, self.created.strftime("%d-%m-%Y"))
-
 
     def get_movimento_display(self):
         movimento = self.movimento
@@ -47,33 +49,27 @@ class Estoque(TimeStampedModel):
     @transaction.atomic
     def processar(self):
         """
-           Atualiza o estoque de acordo com o movimento. ou seja, entrada ou saída.
-           Updates the stock according to the movement. that is, entry or exit.
+        Atualiza o estoque de acordo com o movimento.
+        ou seja, entrada ou saída.
+        Updates the stock according to the movement.
+        that is, entry or exit.
         """
-        log.info("Processando estoque METODO PROCESSAR DO MODEL")
         if not self.processado:
-            log.info("chamando atualizar_estoque_entrada_ou_saida")
             self.atualizar_estoque_entrada_ou_saida()
-            log.info("Chamando save do estoque")
             self.processado = True
             self.save()
 
-
     def atualizar_estoque_entrada_ou_saida(self):
         """
-            Atualiza o estoque de acordo com a entrada ou saida, ou seja, incrementa ou decrementa o saldo dos produtos nessa entrada.
-            Updates the stock according to the entry, that is, increments the balance of the products in this entry.
+        Atualiza o estoque de acordo com a entrada ou saida,
+        ou seja, incrementa ou decrementa o saldo dos produtos.
+        Updates the stock according to the entry,
+        that is, increments the balance of the
+        products in this entry.
         """
-        log.info("@atualizar_estoque_entrada_ou_saida - Atualizando estoque de acordo com a entrada ou saida")
         itens = self.estoque_itens.all()
-        if not itens:
-            log.info("@atualizar_estoque_entrada_ou_saida - Não há itens para atualizar")
         for item in itens:
-            log.info(f"@atualizar_estoque_entrada_ou_saida - Atualizando saldo do produto {item.produto.produto}")
             saldo = item.produto.estoque
-            log.info(f"Saldo atual do produto {item.produto.produto} é {saldo}")
             item.atualizar_saldo()
             saldo = item.produto.estoque
-            log.info(f"Novo saldo do produto {item.produto.produto} é {saldo}")
-            log.info(f"Produto {item.produto.produto} atualizado com sucesso")
-        log.info("@atualizar_estoque_entrada_ou_saida - finalizando atualização do estoque ")
+            log.debug("Novo saldo do produto %s é %s", item.produto.produto, saldo)

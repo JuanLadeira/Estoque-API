@@ -1,5 +1,6 @@
 import csv
 import io
+from pathlib import Path
 
 import pandas as pd
 from django.contrib import messages
@@ -11,7 +12,7 @@ from produto.models.produto_model import Produto
 
 
 def produto_json(request, pk):
-    """ Retorna o produto, id e estoque. """
+    """Retorna o produto, id e estoque."""
     produto = Produto.objects.filter(pk=pk)
     data = [item.to_dict_json() for item in produto]
     return JsonResponse({"data": data})
@@ -25,7 +26,7 @@ def save_data(data):
     for item in data:
         produto = item.get("produto")
         ncm = str(item.get("ncm"))
-        importado = True if item.get("importado") == "True" else False
+        importado = item.get("importado") == "True"
         preco = item.get("preco")
         estoque = item.get("estoque")
         estoque_minimo = item.get("estoque_minimo")
@@ -48,7 +49,7 @@ def import_csv(request):
         file = myfile.read().decode("utf-8")
         reader = csv.DictReader(io.StringIO(file))
         # Gerando uma list comprehension
-        data = [line for line in reader]
+        data = list(reader)
         save_data(data)
         return HttpResponseRedirect(reverse("produto:produto_list"))
 
@@ -58,10 +59,15 @@ def import_csv(request):
 
 def export_csv(request):
     header = (
-        "importado", "ncm", "produto", "preco", "estoque", "estoque_minimo",
+        "importado",
+        "ncm",
+        "produto",
+        "preco",
+        "estoque",
+        "estoque_minimo",
     )
     produtos = Produto.objects.all().values_list(*header)
-    with open("fix/produtos_exportados.csv", "w") as csvfile:
+    with Path.open("fix/produtos_exportados.csv", "w") as csvfile:
         produto_writer = csv.writer(csvfile)
         produto_writer.writerow(header)
         for produto in produtos:
@@ -70,12 +76,11 @@ def export_csv(request):
     return HttpResponseRedirect(reverse("produto:produto_list"))
 
 
-
 def import_csv_with_pandas(request):
     filename = "fix/produtos.csv"
-    df = pd.read_csv(filename)
+    data_frame = pd.read_csv(filename)
     aux = []
-    for row in df.values:
+    for row in data_frame.to_numpy():
         obj = Produto(
             produto=row[0],
             ncm=row[1],

@@ -9,4 +9,3 @@ class ProtocoloEntregaItensInlineSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = ProtocoloEntregaItens
-

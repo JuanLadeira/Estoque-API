@@ -14,23 +14,33 @@ from estoque_api.estoque.serializers.protoco_entrega_serializer import (
 def create_protocolo_entrega_schema(view_func):
     decorator = extend_schema(
         tags=["Estoque - protocolo_entrega"],
-        summary="Create a stock entry - Criar uma protocolo_entrega de estoque",
+        summary="""
+        Create a stock entry -
+        Criar uma protocolo_entrega de estoque
+        """,
         description="""
-        This endpoint is responsible for creating a stock entry.
+        This endpoint is responsible
+        for creating a stock entry.
 
-        The product id must be informed in the 'produto' field and the quantity in the 'quantidade' field.
-        The data must be sent as a list of JSON objects in the 'itens' field.
+        The product id must be informed in the 'produto'
+        field and the quantity in the 'quantidade' field.
+        The data must be sent as a list of JSON objects
+        in the 'itens' field.
 
-        Este endpoint é responsável por criar uma protocolo_entrega de estoque.
+        Este endpoint é responsável por criar
+        um protocolo_entrega de estoque.
 
-        O id do produto deve ser informado no campo 'produto' e a quantidade no campo 'quantidade'.
-        Os dados devem ser enviados como uma lista de objetos JSON no campo 'itens'.
-        
+        O id do produto deve ser informado
+        no campo 'produto' e a quantidade
+        no campo 'quantidade'.
+        Os dados devem ser enviados como uma
+        lista de objetos JSON no campo 'itens'.
         """,
         request=ProtocoloEntregaPostSerializer,
         responses={200: ProtocoloEntregaPostSerializer},
     )
     return decorator(view_func)
+
 
 def retrieve_protocolo_entrega_schema(view_func):
     decorator = extend_schema(
@@ -44,22 +54,34 @@ def retrieve_protocolo_entrega_schema(view_func):
     )
     return decorator(view_func)
 
+
 def list_protocolo_entrega_schema(view_func):
-    decorator =  extend_schema(
+    decorator = extend_schema(
         tags=["Estoque - protocolo_entrega"],
-        summary="List Estoques or search for a stock entry by produto",
-        description="List all stock entries or search for a stock entry by produto",
+        summary="""
+        List Estoques or
+        search for a stock entry by produto
+        """,
+        description="""List all stock entries or
+        search for a stock entry by produto""",
         parameters=[
             OpenApiParameter(
                 name="search",
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
-                description="List or Search for a estoque entry by produto or 'nota fiscal' (nf)",
+                description="""
+                List or Search for a
+                estoque entry by produto or
+                'nota fiscal' (nf)
+                """,
                 examples=[
                     OpenApiExample(
                         name="""
-                        Search by a product name or 'nota fiscal' (nf)
-                        Buscar protocolo_entrega de estoque por um nome de produto ou 'nota fiscal' (nf)
+                        Search by a product name or
+                        'nota fiscal' (nf)
+                        Buscar protocolo_entrega de estoque
+                        por um nome de produto ou
+                        'nota fiscal' (nf)
                         """,
                         value="name",
                     ),
@@ -82,14 +104,12 @@ def list_protocolo_entrega_schema(view_func):
                 Filter by processed status.
                 True: Processed
                 False: Not processed
-                
+
                 Filtrar por status de processamento.
                 True: Processado
                 False: Não processado
-                
                 """,
             ),
         ],
     )
     return decorator(view_func)
-

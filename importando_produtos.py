@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 
 from projeto.produto.models import Produto
 
@@ -9,10 +10,9 @@ def csv_to_list(filename: str) -> list:
     Créditos para Rafael Henrique
     https://bit.ly/2FLDHsH
     """
-    with open(filename) as csv_file:
+    with Path.open(filename) as csv_file:
         reader = csv.DictReader(csv_file, delimiter=",")
-        csv_data = [line for line in reader]
-    return csv_data
+        return list(reader)
 
 
 def save_data(data):
@@ -23,7 +23,7 @@ def save_data(data):
     for item in data:
         produto = item.get("produto")
         ncm = str(item.get("ncm"))
-        importado = True if item.get("importado") == "True" else False
+        importado = item.get("importado") == "True"
         preco = item.get("preco")
         estoque = item.get("estoque")
         estoque_minimo = item.get("estoque_minimo")

@@ -99,7 +99,6 @@ LOCAL_APPS = [
     "estoque_api.estoque",
     "estoque_api.produto",
     "estoque_api.users",
-
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -366,7 +365,6 @@ WEBPACK_LOADER = {
 # ------------------------------------------------------------------------------
 
 
-
 UNFOLD = {
     "SITE_TITLE": "Gestão de Estoque",
     "SITE_HEADER": "Gestão de Estoque",
@@ -382,11 +380,11 @@ UNFOLD = {
     #     "dark": lambda request: static("logo-dark.svg"),  # dark mode
     # },
     "SITE_SYMBOL": "speed",  # symbol from icon set
-    "SHOW_HISTORY": True, # show/hide "History" button, default: True
-    "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
+    "SHOW_HISTORY": True,  # show/hide "History" button, default: True
+    "SHOW_VIEW_ON_SITE": True,  # show/hide "View on site" button, default: True
     # "ENVIRONMENT": "sample_app.environment_callback",
     # "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
-    "THEME": "dark", # Force theme: "dark" or "light". Will disable theme switcher
+    "THEME": "dark",  # Force theme: "dark" or "light". Will disable theme switcher
     "LOGIN": {
         "image": lambda request: static("sample/login-bg.jpg"),
         # "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
@@ -442,11 +440,12 @@ def environment_callback(request):
     Callback has to return a list of two values represeting text value and the color
     type of the label displayed in top right corner.
     """
-    return ["Production", "danger"] # info, danger, warning, success
+    return ["Production", "danger"]  # info, danger, warning, success
 
 
 def badge_callback(request):
     return 3
+
 
 def permission_callback(request):
     return request.user.has_perm("sample_app.change_model")

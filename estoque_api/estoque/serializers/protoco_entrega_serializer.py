@@ -13,14 +13,18 @@ from estoque_api.estoque.serializers.inlines.protocolo_itens_inline_serializer i
 
 log = getLogger("django")
 
+
 class ProtocoloEntregaGetSerializer(serializers.ModelSerializer):
     protocolo_entrega_itens = ProtocoloEntregaItensInlineSerializer(many=True)
+
     class Meta:
         fields = "__all__"
         model = ProtocoloEntrega
 
+
 class ProtocoloEntregaPostSerializer(serializers.ModelSerializer):
     protocolo_entrega_itens = ProtocoloEntregaItensInlineSerializer(many=True)
+
     class Meta:
         fields = "__all__"
         model = ProtocoloEntrega
@@ -35,11 +39,9 @@ class ProtocoloEntregaPostSerializer(serializers.ModelSerializer):
         itens = validated_data.pop("protocolo_entrega_itens")
         protocolo = super().create(validated_data)
 
-        itens = ProtocoloEntregaItens.objects.bulk_create([
-            ProtocoloEntregaItens(estoque=protocolo, **item) for item in itens
-        ])
-        log.info(f"Protocolos de entrega itens criados: {itens}")
-
+        itens = ProtocoloEntregaItens.objects.bulk_create(
+            [ProtocoloEntregaItens(estoque=protocolo, **item) for item in itens],
+        )
         protocolo.processar_protocolo(user=user)
 
         return protocolo

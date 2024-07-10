@@ -1,10 +1,18 @@
 import csv
+from pathlib import Path
 
-with open("fix/produtos.csv", "w") as f:
+with Path.open("fix/produtos.csv", "w") as f:
     csv_writer = csv.writer(f)
-    csv_writer.writerow([
-        "produto", "ncm", "importado", "preco", "estoque", "estoque_minimo",
-    ])
+    csv_writer.writerow(
+        [
+            "produto",
+            "ncm",
+            "importado",
+            "preco",
+            "estoque",
+            "estoque_minimo",
+        ],
+    )
     # escrever mais de uma linha com o writerows (plural)
     rows = [
         ["Apontador", 14669768, True, 15.54, 125, 30],
@@ -34,8 +42,14 @@ with open("fix/produtos.csv", "w") as f:
         ["Caderno quadriculado", 42473200, False, 15.75, 158, 50],
         ["Cadernos pautados", 97081452, False, 2.55, 175, 50],
         ["Calculadora", 39854288, False, 17.84, 174, 40],
-        ["Calculadora não gráfica com funções trigonométricas",
-            60271477, False, 6.33, 107, 50],
+        [
+            "Calculadora não gráfica com funções trigonométricas",
+            60271477,
+            False,
+            6.33,
+            107,
+            50,
+        ],
         ["Calções", 20263760, False, 13.68, 66, 50],
         ["Camiseta", 30533013, False, 1.43, 79, 20],
         ["Capa arquivadora de desenhos A3", 80951670, False, 35.88, 131, 30],

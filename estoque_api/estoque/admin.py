@@ -31,33 +31,42 @@ class EstoqueEntradaAdmin(ModelAdmin):
     verbose_name_plural = "Entradas de estoque"
 
     def get_form(self, request, obj=None, **kwargs):
-            form = super(EstoqueEntradaAdmin, self).get_form(request, obj, **kwargs)
-            # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
-            form.base_fields["movimento"].initial = "e"
-            # Para ocultar o campo 'movimento' do formulário
-            if "movimento" in form.base_fields:
-                form.base_fields["movimento"].widget = forms.HiddenInput()
-            return form
+        form = super().get_form(request, obj, **kwargs)
+        # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
+        form.base_fields["movimento"].initial = "e"
+        # Para ocultar o campo 'movimento' do formulário
+        if "movimento" in form.base_fields:
+            form.base_fields["movimento"].widget = forms.HiddenInput()
+        return form
 
     def save_related(self, request: Any, form: Any, formsets: Any, change: Any) -> None:
         """
-            ### Portuguese
-            O método save_related é chamado após o salvamento do formulário principal e dos formulários inline.
-            Ou seja, após salvar todos os itens de estoque relacionados a esta instancia de entrada de estoque.
+        ### Portuguese
+        O método save_related é chamado após o salvamento
+        do formulário principal e dos formulários inline.
+        Ou seja, após salvar todos os itens de estoque
+        relacionados a esta instancia de entrada de estoque.
 
-            Desta forma, após salvar todos os itens de estoque, chamamos o método processar da instancia de entrada de estoque para atualizar
-            o saldo dos produtos relacionados a cada item.
+        Desta forma, após salvar todos os itens de estoque,
+        chamamos o método processar da instancia de entrada
+        de estoque para atualizar
+        o saldo dos produtos relacionados a cada item.
 
-            ### English
-            The save_related method is called after saving the main form and inline forms.
-            That is, after saving all stock items related to this stock entry instance.
+        ### English
+        The save_related method is called after
+        saving the main form and inline forms.
+        That is, after saving all stock items related
+        to this stock entry instance.
 
-            In this way, after saving all stock items, we call the process method of the stock entry instance to update
-            the balance of the products related to each item.
+        In this way, after saving all stock items,
+        we call the process method of the stock entry
+        instance to update the balance of the products
+        related to each item.
         """
         super().save_related(request, form, formsets, change)
         obj = form.instance
         obj.processar()
+
 
 @admin.register(EstoqueSaida)
 class EstoqueSaidaAdmin(ModelAdmin):
@@ -69,13 +78,13 @@ class EstoqueSaidaAdmin(ModelAdmin):
     verbose_name = "Saída de estoque"
 
     def get_form(self, request, obj=None, **kwargs):
-            form = super(EstoqueSaidaAdmin, self).get_form(request, obj, **kwargs)
-            # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
-            form.base_fields["movimento"].initial = "s"
-            # Para ocultar o campo 'movimento' do formulário
-            if "movimento" in form.base_fields:
-                form.base_fields["movimento"].widget = forms.HiddenInput()
-            return form
+        form = super().get_form(request, obj, **kwargs)
+        # Definir o valor padrão para o campo 'movimento' como 'entrada', por exemplo
+        form.base_fields["movimento"].initial = "s"
+        # Para ocultar o campo 'movimento' do formulário
+        if "movimento" in form.base_fields:
+            form.base_fields["movimento"].widget = forms.HiddenInput()
+        return form
 
     def save_related(self, request: Any, form: Any, formsets: Any, change: Any) -> None:
         super().save_related(request, form, formsets, change)
