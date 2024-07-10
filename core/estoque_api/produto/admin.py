@@ -45,6 +45,15 @@ class ProdudoInline(admin.TabularInline):
     extra = 0
     min_num = 1
 
+    def can_delete(self, request, obj=None):
+        return False
+    
+    def has_change_permission(self, request: HttpRequest, obj = None) -> bool:
+        return False
+    
+    def has_add_permission(self, request: HttpRequest, obj = None) -> bool:
+        return False
+
     
 
 
@@ -99,5 +108,6 @@ class ProdutoAdmin(admin.ModelAdmin):
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('__str__', )
     search_fields = ('categoria',)
+    readonly_fields = ('slug',)
 
     inlines = [ProdudoInline]
